@@ -1,0 +1,23 @@
+
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+/**
+ *
+ * @author tom
+ */
+public class DataDigest {
+    @SuppressWarnings({"null", "ConstantConditions"})
+    public static String getEncrypted(String input) {
+        if(input == null) return "";
+        MessageDigest sha512 = null;
+        try{
+            sha512 = MessageDigest.getInstance("SHA-512");
+            sha512.update(input.getBytes("UTF-16"));
+        } catch(NoSuchAlgorithmException nsae) {
+            System.err.println("Algorithm Error! " + nsae.getMessage());
+        } catch(UnsupportedEncodingException uee) {
+            System.err.println("Encoding Error! " + uee.getMessage());
+        } return Base64.encode(sha512.digest());
+    }
+}
